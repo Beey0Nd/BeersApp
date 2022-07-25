@@ -12,7 +12,7 @@ const BeerPage = lazy(() => import("../Pages/BeerPage"))
 const App = () => {
   return (
     <div className="app">
-        <Router>
+        <Router basename={process.env.PUBLIC_URL}>
             <Suspense fallback={<Spinner/>}>
                 <Routes>
                     <Route path="/" element={<MainPage/>}/>
