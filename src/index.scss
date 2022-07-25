@@ -1,0 +1,190 @@
+$blue: #74b8ff; 
+@mixin beer-info {
+    color: lightcoral;
+    width: fit-content;
+    height: fit-content;
+    padding: 20px;
+    line-height: 1;
+    border-radius: 10px;
+    background: lightyellow;
+}
+
+@mixin use-shadow($color) {
+    box-shadow: 6px 6px 10px $color;
+}
+
+*, 
+*::after, 
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+}
+html, body, #root {
+    height: 100%;
+}
+html {
+    background-color: bisque;
+    font-size: 18px;
+    outline: none;
+    li {
+        list-style: none;
+    }
+    
+    a {
+        text-decoration: none;
+    }
+
+    .app {
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 15px;
+        align-items: center;
+        .beer-filter {
+            width: 10rem;
+            height: 2rem;
+            padding: 5px;
+            border: 1px solid $blue;
+            border-radius: 5px;
+            color: $blue;
+            transition: all .3s;
+            margin-bottom: 1rem;
+            &::placeholder {
+                color: $blue;
+            }
+            &:focus{
+                color: white;
+            }
+            &:focus-visible {
+                background-color: $blue;
+                width: 15rem;
+                &::placeholder {
+                    color: white;
+                }
+            }
+        }
+        .beer-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+        }
+        .beer-card {
+            width: 330px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 10%;
+            transition: all .3s;
+            filter: drop-shadow(0 0 10px $blue);
+                &:hover {
+                    transform: scale(0.95);
+                }
+            &__info {
+                color: $blue;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+            }
+            &__link{
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
+            &__name {
+                color: lightcoral;
+            }
+            &__image {
+                object-fit: scale-down;
+                max-height: 300px;  
+            }
+        }
+        .beer-page {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background: lightblue;
+            border-radius: 0.5rem;
+            margin: auto;
+            filter: drop-shadow(0 0 10px $blue);
+            height: 100%;
+            &__info {
+                display: grid;
+                color: $blue;
+                max-width: 800px;
+                grid-template-areas: 
+                "name name"
+                "tag tag"
+                "abv food"
+                "desc desc";    
+                @media (max-width: 950px) {
+                    & {
+                        gap: 20px;
+                        grid-template-areas: 
+                        "name"
+                        "tag"
+                        "abv"
+                        "food"
+                        "desc";
+                    }
+                }                
+            }
+            &__name{
+                grid-area: name;
+                font-size: 4rem;
+                @include beer-info;
+                @include use-shadow(lightcoral)
+            }
+            &__tagline {
+                grid-area: tag;
+                @include beer-info;
+            }
+            &__desc{
+                grid-area: desc;
+                font-size: 1rem;
+                @include beer-info;
+            }
+            &__abv {
+                grid-area: abv;
+                align-self: center;
+                @include beer-info;
+                &-text {
+                    font-size: 4rem;
+                }
+            }
+            &__food {
+                grid-area: food;
+                @include beer-info;
+                &-title {
+                    margin-bottom: 5px;
+                }
+                &-desc {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 5px;
+                    font-size: 1.2rem;
+                }
+                &-text {
+                    list-style: inside;
+                }
+            }
+            &__image{
+                display: block;
+                height: 600px;
+                object-fit: scale-down;
+            }
+        }
+    }
+}
+
+
+
+
