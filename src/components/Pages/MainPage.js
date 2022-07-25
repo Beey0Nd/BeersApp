@@ -2,28 +2,33 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import useBeerService from "../../services/useBeerService";
 import BeerCard from "../BeerCard/BeerCard";
+import Navigation from "../Navigation/Navigation";
 import SearchInput from "../SearchInput/SearchInput";
 import Spinner from "../Spinner/Spinner";
 
 const MainPage = () => {
     const [beers, setBeers] = useState(null);
     const [query, setQuery] = useState("");
+    const [pages, setPages] = useState({
+        currentPage: 1,
+        totalPages: 0
+    });
     const { getAllBeers, loading, setLoading } = useBeerService();
     
     useEffect(() => {
         getAllBeers()
         .then(res => {
             setBeers(res);
+            setPages({
+                ...pages,
+                totalPages: Math.ceil(res.length / 3)
+            });
             setLoading(false)
         })
     }, [])
 
-    const filterBeers = () => {
-        if(query) {
-            return beers.filter(beer => beer.name.toLowerCase().includes(`${query}`.toLowerCase().trim()))
-        }
-
-        return beers;
+    const paginate = () => {
+        return beers.slice(3 * (pages.currentPage - 1), 3 * pages.currentPage)
     }
 
     const renderBeers = (beers) => beers.map(beer => {
@@ -48,15 +53,21 @@ const MainPage = () => {
                 />
                 <title>Main Page</title>
             </Helmet>
-            {loading ? null : 
+            {beers && !loading ?  
                 <SearchInput 
+                beers={beers}
                 query={query} 
-                setQuery={setQuery}/>
+                setQuery={setQuery}/> : null
             }
             <ul className="beer-list">
                 {loading ? <Spinner/> : beers 
-                ? renderBeers(filterBeers()) : null}
+                ? 
+                    <>
+                        {renderBeers(paginate())}
+                    </> : null
+                }
             </ul>
+            {beers && !loading ? <Navigation pages={pages} setPages={setPages}/> : null}
         </>
     )
 }

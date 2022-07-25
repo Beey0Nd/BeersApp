@@ -70,12 +70,16 @@ html {
                     color: white;
                 }
             }
+            &.error {
+                background-color: lightcoral;
+            }
         }
         .beer-list {
             display: flex;
             flex-wrap: wrap;
             gap: 2rem;
             justify-content: center;
+            margin-bottom: 1rem;
         }
         .beer-card {
             width: 330px;
@@ -180,6 +184,28 @@ html {
                 display: block;
                 height: 600px;
                 object-fit: scale-down;
+            }
+        }
+        .navigation {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            &__button {
+                cursor: pointer;
+                border: 3px solid white;
+                width: 50px;
+                height: 50px;
+                background: $blue;
+                font-size: 1.5rem;
+                color: white;
+                border-radius: 15%;
+                transition: all .3s;
+                &:hover{
+                    background-color: aquamarine;
+                }
+            }
+            .active {
+                background-color: lightcoral;
             }
         }
     }
